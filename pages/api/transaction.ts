@@ -32,11 +32,13 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     case 'POST':
       const body = request.body;
 
-      const dataBase = await connectToDatabase(process.env.MONGODB_URI || '');
+      const dataBase = await connectToDatabase(
+        'mongodb+srv://sensedata:sensedata987@menegatti.px3ql.mongodb.net/sensedata?retryWrites=true&w=majority'
+      );
 
       const collection = dataBase.collection('transactions');
 
-      const result = await collection.insertOne(body);
+      const result = await collection.insertOne({ body });
 
       response.status(200).json({ result });
 
